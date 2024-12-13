@@ -4,7 +4,7 @@ services:
         image: redis:latest
         container_name: redis-master
         restart: unless-stopped
-        command: redis-server --loglevel warning --requirepass password --masterauth password --replica-announce-ip 192.168.29.242 --replica-announce-port 6379
+        command: redis-server --loglevel warning --requirepass _password_ --masterauth _password_ --replica-announce-ip 192.168.29.242 --replica-announce-port 6379
         volumes:
             - redis-data:/data
         ports:
@@ -13,7 +13,7 @@ services:
         image: redis:latest
         container_name: redis-slave
         restart: unless-stopped
-        command: redis-server --slaveof redis-master 6379 --loglevel warning --requirepass password --masterauth password --replica-announce-ip 192.168.29.242  --replica-announce-port 6378
+        command: redis-server --slaveof redis-master 6379 --loglevel warning --requirepass _password_ --masterauth _password_ --replica-announce-ip 192.168.29.242  --replica-announce-port 6378
         links:
             - redis-master
         volumes:
@@ -27,7 +27,7 @@ services:
             - redis-master
             - redis-slave
         environment:
-            - REDIS_MASTER_PASSWORD='password'
+            - REDIS_MASTER_PASSWORD='_password_'
         ports:
             - "26377:26379"
     redis-sentinel2:
@@ -37,7 +37,7 @@ services:
             - redis-master
             - redis-slave
         environment:
-            - REDIS_MASTER_PASSWORD='password'
+            - REDIS_MASTER_PASSWORD='_password_'
         ports:
             - "26378:26379"
     redis-sentinel3:
@@ -47,7 +47,7 @@ services:
             - redis-master
             - redis-slave
         environment:
-            - REDIS_MASTER_PASSWORD='password'
+            - REDIS_MASTER_PASSWORD='_password_'
         ports:
             - "26379:26379"
 volumes:
